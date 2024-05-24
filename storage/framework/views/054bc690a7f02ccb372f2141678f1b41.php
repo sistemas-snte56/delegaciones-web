@@ -201,6 +201,21 @@
             });
         </script>
     <?php endif; ?>
+
+
+    <?php if(session('error')): ?>
+        <script>
+            $(document).ready(function(){
+                let mensaje = "<?php echo e(session('error')); ?>"
+                Swal.fire({
+                    icon: "error",
+                    title: mensaje,
+                    text: "Debido a que depende de alguna Secretaría. "
+                });
+            });            
+        </script>
+    <?php endif; ?>
+
 <?php $__env->stopSection(); ?>
 
 

@@ -1,9 +1,14 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'REGIONES')
 
 @section('content_header')
-    <h1>ADMINISTRACIÓN DE REGIONES</h1>
+    <div class="title">
+        ESTRUCTURA REGIONAL DE LA SECCIÓN 56 DEN SNTE
+        <h5>
+            LISTADO DE LAS REGIONES 
+        </h5>      
+    </div>       
 @stop
 
 @section('content')
@@ -14,37 +19,76 @@
         </div>
 
         <div class="card-body">
-            <div class="row">
-                @foreach ($regiones as $region)
-                    <div class="col-sm-4">
-                        <div class="card">
-                            <x-adminlte-small-box title="{{ $region->region}} - {{ $region->sede}}" 
-                                text="{{ $region->delegaciones_count }} Delegaciones" 
-                                icon="fa fa-users fa-2x text-white"
-                                theme="secondary" 
-                                url="{{ route('region.show', $region) }}" 
-                                url-text="Ver todas las delegaciones" />
-                                <!-- Botones adicionales -->
-                                <div class="small-box-footer" style="margin-bottom: 6px; margin-left: 6px;" >
-                                    {{-- <a href="{{ route('region.show', $region) }}" class="btn btn-primary btn-sm">
-                                        <i class="fas fa-eye"></i> View
-                                    </a> --}}
-                                    <a href="{{ route('region.edit', $region) }}" class="btn btn-secondary btn-sm">
-                                        <i class="fas fa-edit"></i> Edit
-                                    </a>
-                                    {{-- <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal-delete-{{ $region->id }}">
-                                        <i class="fas fa-trash"></i> Delete
-                                    </button> --}}
-                                </div>
-                        </div>
-                    </div>
-                    
+            @php
+
+                $btnEdit = '<button class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
+                                <i class="fa fa-lg fa-fw fa-pen"></i>
+                            </button>';
+                $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow" title="Delete">
+                                <i class="fa fa-lg fa-fw fa-trash"></i>
+                            </button>';
+                $btnDetails = '<button class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
+                                <i class="fa fa-lg fa-fw fa-eye"></i>
+                            </button>';
+                            
+                            
+                $heads = [
+                    'ID',
+                    'REGIÓN',
+                    'SEDE',
+                    'COORDINADOR',
+                    ['label' => 'DELEGACIONES', 'width' => 4 ],
+                    ['label' => 'CONFIGURACIÓN', 'no-export' => true, 'width' => 5],
+                ];
+        
+                $config = [
+                    // 'order' => [[1, 'asc']],
+                    'columns' => [
+                        ['orderable' => false], 
+                        ['orderable' => false], 
+                        ['orderable' => false], 
+                        ['orderable' => false], 
+                        ['orderable' => false],
+                        ['orderable' => false],
+                    ],
+                    'language' => [
+                        'url' => '//cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json',
+                    ],
+                    'lengthMenu' => [50,100,500],                    
+                ];
+            @endphp
+        
+            <x-adminlte-datatable id="table1" :heads="$heads" :config="$config"
+                striped hoverable bordered compressed>
+                @foreach($regiones as $region)
+                    <tr>
+                        <td>{{ $region->id }}</td>
+                        <td>{{ $region->region }}</td>
+                        <td>{{ $region->sede }}</td>
+                        <td>{{ $region->coordinador }}</td>
+                        <td>{{ $region->delegaciones_count }}</td>
+                        <td>
+
+
+                            <a href="{{route('region.show',$region)}}" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Mostrar">
+                                <i class="fa fa-lg fa-fw fa-eye"></i>
+                            </a>                            
+                            <a href="{{route('region.edit',$region)}}" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Editar">
+                                <i class="fa fa-lg fa-fw fa-pen"></i>
+                            </a>
+                            <form action=" {{ route('region.destroy', $region) }} " method="post" class="formEliminar" style="display: inline">
+                                @csrf
+                                @method('DELETE')
+                                {!! $btnDelete !!}
+                            </form>
+                            
+                        </td>
+                    </tr>
                 @endforeach
-            </div>
-            <div class="tota-delegaciones">
-                Total Delegaciones: {{ $regiones->sum('delegaciones_count') }}
-            </div>
+        
+            </x-adminlte-datatable>
         </div>
+        
     </div>
 @stop
 

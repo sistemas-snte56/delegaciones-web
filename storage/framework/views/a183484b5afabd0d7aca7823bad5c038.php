@@ -1,9 +1,15 @@
 
 
-<?php $__env->startSection('title', 'Dashboard'); ?>
+<?php $__env->startSection('title', $region->region); ?>
 
 <?php $__env->startSection('content_header'); ?>
-    <h1>ADMINISTRACIÓN DE REGIONES</h1>
+    <div class="title">
+        ESTRUCTURA REGIONAL DE LA SECCIÓN 56 DEN SNTE
+        <h5>
+            DELEGACIONES CORRESPONDIENTES A LA <?php echo e($region->region); ?> <?php echo e($region->sede); ?>
+
+        </h5>      
+    </div>    
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
@@ -18,6 +24,7 @@
 
             <?php
                 $heads = [
+                    'NO',
                     ['label' => 'DELEGACIÓN', 'width' => 5],
                     'NIVEL',
                     ['label' => 'SEDE', 'width' => 40],
@@ -36,8 +43,14 @@
 
                 $config = [
                     
-                    // 'order' => [[1, 'asc']],
-                    'columns' => [null, ['orderable' => false], ['orderable' => false], ['orderable' => false]],
+                    'order' => [[1, 'asc']],
+                    'columns' => [
+                        ['orderable' => false], 
+                        ['orderable' => false], 
+                        ['orderable' => false], 
+                        ['orderable' => false], 
+                        ['orderable' => false]
+                    ],
                     'lengthMenu' => [50,100,500],
                     // 'paging' => false,
                     // 'lengthMenu' => false,
@@ -57,38 +70,27 @@
 <?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
 <?php endif; ?>
 <?php $component->withAttributes([]); ?>
+                <?php
+                    $num_secuencial = 1;
+                ?>
+                
+
+
+
+
                 <?php $__currentLoopData = $region->delegaciones; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $delegacion): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <tr>
-                        <td> <?php echo e($delegacion->nomenclatura->nomenclatura); ?><?php echo e($delegacion->num_delegaciona); ?> </td>
-                        <td> <?php echo e($delegacion->nivel_delegaciona); ?> </td>
-                        <td> <?php echo e($delegacion->sede_delegaciona); ?> </td>
-                        <td>
-                            <form action=" <?php echo e(route('delegacion.show',$delegacion)); ?> " method="get">
-                                <?php echo csrf_field(); ?>
-                                <?php if (isset($component)) { $__componentOriginal84b78d66d5203b43b9d8c22236838526 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginal84b78d66d5203b43b9d8c22236838526 = $attributes; } ?>
-<?php $component = JeroenNoten\LaravelAdminLte\View\Components\Form\Button::resolve(['type' => 'submit','label' => ' VER','theme' => 'success','icon' => 'fas fa-eye'] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
-<?php $component->withName('adminlte-button'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(JeroenNoten\LaravelAdminLte\View\Components\Form\Button::class))->getConstructor()): ?>
-<?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['class' => 'btn-sm']); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginal84b78d66d5203b43b9d8c22236838526)): ?>
-<?php $attributes = $__attributesOriginal84b78d66d5203b43b9d8c22236838526; ?>
-<?php unset($__attributesOriginal84b78d66d5203b43b9d8c22236838526); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginal84b78d66d5203b43b9d8c22236838526)): ?>
-<?php $component = $__componentOriginal84b78d66d5203b43b9d8c22236838526; ?>
-<?php unset($__componentOriginal84b78d66d5203b43b9d8c22236838526); ?>
-<?php endif; ?>
-                            </form>                           
-                        </td>
-                    </tr>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                <h2>Delegación: <?php echo e($delegacion->nomenclatura->nomenclatura); ?><?php echo e($delegacion->num_delegaciona); ?> </h2>
+                <ul>
+                    <?php $__currentLoopData = $delegacion->maestros; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $maestro): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <li>ID Secretaria: <?php echo e($maestro->id_secretaria); ?></li>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </ul>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+
+
+
+
              <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal1f0f987500f76b1f57bfad21f77af286)): ?>
@@ -108,6 +110,7 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('css'); ?>
+    <!-- <link rel="stylesheet" href="/css/miestilo.css"> -->
     <link rel="stylesheet" href="/css/admin_custom.css">
 <?php $__env->stopSection(); ?>
 

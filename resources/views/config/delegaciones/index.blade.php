@@ -181,5 +181,20 @@
             });
         </script>
     @endif
+
+
+    @if (session('error'))
+        <script>
+            $(document).ready(function(){
+                let mensaje = "{{session('error')}}"
+                Swal.fire({
+                    icon: "error",
+                    title: mensaje,
+                    text: "Debido a que depende de alguna Secretaría. "
+                });
+            });            
+        </script>
+    @endif
+
 @stop
 

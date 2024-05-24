@@ -1,12 +1,13 @@
 <?php
 
-use App\Http\Controllers\DelegacionController;
-use App\Http\Controllers\DelegacionCtController;
-use App\Http\Controllers\MaestroController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\RegionController;
 use App\Livewire\SelectorDelegacion;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RegionController;
+use App\Http\Controllers\MaestroController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DelegacionController;
+use App\Http\Controllers\DelegacionCtController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,9 +29,10 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+        // Route::get('/dashboard', function () {
+        //     return view('dashboard');
+        // })->name('dashboard');
+    Route::get('/dashboard',[DashboardController::class,'index']);
     Route::get('/profile',[ProfileController::class,'index']);
     Route::resource('/regiones', RegionController::class)->names('region');
     route::resource('/delegaciones', DelegacionController::class)->names('delegacion');

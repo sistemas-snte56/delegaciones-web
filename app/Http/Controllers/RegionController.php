@@ -73,12 +73,43 @@ class RegionController extends Controller
         //     }
         // ])->find($id);
 
-
+/*
 
         // Obtener la región específica junto con sus delegaciones
         $region = Region::with('delegaciones')->findOrFail($id);
-        
+
         return view('config.regiones.show', compact('region'));
+
+*/
+
+
+
+
+
+$region = Region::with(['delegaciones' => function ($query) {
+    $query->with('maestros:id_secretaria,id_delegacion');
+}])->findOrFail($id);
+
+
+return view('config.regiones.show', compact('region'));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

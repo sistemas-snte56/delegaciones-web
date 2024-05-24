@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Region;
+use App\Models\Maestro;
 use App\Models\Delegacion;
 use App\Models\DelegacionCt;
-use App\Models\Maestro;
 use App\Models\Nomenclatura;
-use App\Models\Region;
-use App\Models\TipoDelegacion;
 use Illuminate\Http\Request;
+use App\Models\TipoDelegacion;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 // use App\Http\Controllers\PDF;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
+use Illuminate\Database\QueryException;
 
 class DelegacionController extends Controller
 {
@@ -289,12 +290,29 @@ class DelegacionController extends Controller
      */
     public function destroy(Delegacion $delegacion, $id)
     {
+        /*
         $delegacion = Delegacion::find($id);
         if (!$delegacion) {
             return abort(404);
         }
         $delegacion->delete();
         return back()->with('delete', 'Su registro ha sido eliminado.');
+        */
+        
+        try {
+            $delegacion = Delegacion::find($id);
+            $delegacion->delete();
+            return back()->with('delete', 'Su registro ha sido eliminado.');
+        } catch (QueryException $e) {
+            if ($e->getCode() == 23000) {
+                // return response()->json(['message' => 'No es posible borrar el registro debido a que corresponde a otras delegaciones'], 422);
+                return back()->with('error', 'Error al eliminar la delegación.');
+            } else {
+                // Si es otra excepción, puedes manejarla según tus necesidades
+                // return response()->json(['message' => 'Error desconocido al eliminar el registro'], 500);
+                return back()->with('error', 'Error desconocido al eliminar el registro.');
+            }
+        }        
     }
 
     /**

@@ -1,9 +1,14 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', $region->region)
 
 @section('content_header')
-    <h1>ADMINISTRACIÓN DE REGIONES</h1>
+    <div class="title">
+        ESTRUCTURA REGIONAL DE LA SECCIÓN 56 DEN SNTE
+        <h5>
+            DELEGACIONES CORRESPONDIENTES A LA {{$region->region}} {{$region->sede}}
+        </h5>      
+    </div>    
 @stop
 
 @section('content')
@@ -18,6 +23,7 @@
 
             @php
                 $heads = [
+                    'NO',
                     ['label' => 'DELEGACIÓN', 'width' => 5],
                     'NIVEL',
                     ['label' => 'SEDE', 'width' => 40],
@@ -36,8 +42,14 @@
 
                 $config = [
                     
-                    // 'order' => [[1, 'asc']],
-                    'columns' => [null, ['orderable' => false], ['orderable' => false], ['orderable' => false]],
+                    'order' => [[1, 'asc']],
+                    'columns' => [
+                        ['orderable' => false], 
+                        ['orderable' => false], 
+                        ['orderable' => false], 
+                        ['orderable' => false], 
+                        ['orderable' => false]
+                    ],
                     'lengthMenu' => [50,100,500],
                     // 'paging' => false,
                     // 'lengthMenu' => false,
@@ -48,11 +60,22 @@
 
             {{-- Minimal example / fill data using the component slot --}}
             <x-adminlte-datatable id="table1" :heads="$heads" :config="$config"  striped hoverable>
-                @foreach ($region->delegaciones as $delegacion)
+                @php
+                    $num_secuencial = 1;
+                @endphp
+                {{-- @foreach ($region->delegaciones as $delegacion)
                     <tr>
+                        <td> {{$num_secuencial++}} </td>
                         <td> {{ $delegacion->nomenclatura->nomenclatura}}{{$delegacion->num_delegaciona}} </td>
                         <td> {{ $delegacion->nivel_delegaciona }} </td>
-                        <td> {{$delegacion->sede_delegaciona}} </td>
+                        <td> 
+                            {{$delegacion->sede_delegaciona}} 
+                            @foreach($delegacion->maestros as $maestro)
+                                <li>{{ $maestro->nombre }}</li>
+                            @endforeach
+                        
+                        
+                        </td>
                         <td>
                             <form action=" {{route('delegacion.show',$delegacion)}} " method="get">
                                 @csrf
@@ -60,7 +83,24 @@
                             </form>                           
                         </td>
                     </tr>
-                @endforeach
+                @endforeach --}}
+
+
+
+
+                @foreach($region->delegaciones as $delegacion)
+                <h2>Delegación: {{ $delegacion->nomenclatura->nomenclatura}}{{$delegacion->num_delegaciona}} </h2>
+                <ul>
+                    @foreach($delegacion->maestros as $maestro)
+                        <li>ID Secretaria: {{ $maestro->id_secretaria }}</li>
+                    @endforeach
+                </ul>
+            @endforeach
+
+
+
+
+
             </x-adminlte-datatable>
 
 
@@ -71,7 +111,8 @@
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="/css/miestilo.css">
+    <!-- <link rel="stylesheet" href="/css/miestilo.css"> -->
+    <link rel="stylesheet" href="/css/admin_custom.css">
 @stop
 
 @section('js')

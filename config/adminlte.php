@@ -15,7 +15,7 @@ return [
     */
 
     'title' => 'Sección 56',
-    'title_prefix' => 'SNTE :: ',
+    'title_prefix' => 'SNTE56 | ',
     'title_postfix' => '',
 
     /*
@@ -30,7 +30,7 @@ return [
     |
     */
 
-    'use_ico_only' => false,
+    'use_ico_only' => true,
     'use_full_favicon' => false,
 
     /*
@@ -151,7 +151,7 @@ return [
     'layout_topnav' => null,
     'layout_boxed' => null,
     'layout_fixed_sidebar' => null,
-    'layout_fixed_navbar' => null,
+    'layout_fixed_navbar' => true,
     'layout_fixed_footer' => null,
     'layout_dark_mode' => null,
 
@@ -167,12 +167,12 @@ return [
     |
     */
 
-    'classes_auth_card' => 'card-outline card-primary',
+    'classes_auth_card' => 'card-outline card-info',
     'classes_auth_header' => '',
     'classes_auth_body' => '',
-    'classes_auth_footer' => '',
+    'classes_auth_footer' => 'd-none',
     'classes_auth_icon' => '',
-    'classes_auth_btn' => 'btn-flat btn-primary',
+    'classes_auth_btn' => 'btn-flat btn-info',
 
     /*
     |--------------------------------------------------------------------------
@@ -187,12 +187,14 @@ return [
     */
 
     'classes_body' => '',
-    'classes_brand' => '',
+    'classes_brand' => 'bg-white',
     'classes_brand_text' => '',
     'classes_content_wrapper' => '',
-    'classes_content_header' => '',
+    // 'classes_content_header' => '',
+    'classes_content_header' => 'title',
     'classes_content' => '',
-    'classes_sidebar' => 'sidebar-dark-primary elevation-4',
+    // 'classes_sidebar' => 'sidebar-dark-primary elevation-4',
+    'classes_sidebar' => 'sidebar-light-primary elevation-4',
     'classes_sidebar_nav' => '',
     'classes_topnav' => 'navbar-white navbar-light',
     'classes_topnav_nav' => 'navbar-expand',
@@ -264,8 +266,18 @@ return [
     |
     */
 
+    // ORIGINALES
+    // 'use_route_url' => false,
+    // 'dashboard_url' => 'home',
+    // 'logout_url' => 'logout',
+    // 'login_url' => 'login',
+    // 'register_url' => 'register',
+    // 'password_reset_url' => 'password/reset',
+    // 'password_email_url' => 'password/email',
+    // 'profile_url' => false,
+
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => 'dashboard',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -310,14 +322,70 @@ return [
         ],
         [
             'type'         => 'fullscreen-widget',
-            'topnav_right' => true,
+            'topnav_right' => false,
         ],
 
-        // Sidebar items:
         [
-            'type' => 'sidebar-menu-search',
-            'text' => 'search',
+            'text' => 'Inicio',
+            'url' => '/dashboard',
+            'icon' => 'fas fa-fw fa-home',
+            'topnav' => true,            
         ],
+
+        [
+            'text' => 'Regiones',
+            'icon' => 'fas fa-fw fa-file',
+            'topnav' => true,
+            'submenu' => [
+                [
+                    'text' => 'Listado',
+                    'route' => 'region.index',
+                ],
+                [
+                    'text' => 'Nuevo',
+                    'route' => 'region.create',
+                ],
+            ],
+        ],
+
+
+        [
+            'text' => 'Delegaciones',
+            'icon' => 'fas fa-fw fa-share',
+            'topnav' => true,
+            'submenu' => [
+                [
+                    'text' => 'Listado',
+                    'route' => 'delegacion.index',
+                ],
+                [
+                    'text' => 'Nuevo',
+                    'route' => 'delegacion.create',
+                ],
+            ],
+        ],
+
+
+
+
+
+
+
+
+
+
+        // Sidebar items:
+        // [
+        //     'type' => 'sidebar-menu-search',
+        //     'text' => 'search',
+        // ],
+
+        [
+            'text' => 'Inicio',
+            'url' => '/dashboard',
+            'icon' => 'fas fa-fw fa-home',
+        ],
+
         [
             'text' => 'blog',
             'url'  => 'admin/blog',
