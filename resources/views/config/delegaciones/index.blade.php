@@ -26,6 +26,8 @@
                     'DELEGACION', 
                     'NIVEL', 
                     'SEDE', 
+                    'INICIO', 
+                    'FINAL', 
                     ['label' => 'ACCIONES', 'no-export' => true, 'width' => 15]
                 ];
 
@@ -43,6 +45,8 @@
                         ['orderable' => false,'visible' => true, 'type' => 'num'],
                         ['orderable' => false,'visible' => true], 
                         ['orderable' => true,'visible' => true, 'type' => 'text'], 
+                        ['orderable' => false,'visible' => true], 
+                        ['orderable' => false,'visible' => true], 
                         ['orderable' => false,'visible' => true], 
                         ['orderable' => false,'visible' => true], 
                         ['orderable' => false,'visible' => true], 
@@ -79,6 +83,8 @@
                         <td>{{ $delegacion->nomenclatura->nomenclatura }}{{ $delegacion->num_delegaciona }}  </td>
                         <td>{{ $delegacion->nivel_delegaciona }}</td>
                         <td>{{ $delegacion->sede_delegaciona }}</td>
+                        <td>{{ $delegacion->fecha_inicio_delegaciona }}</td>
+                        <td>{{ $delegacion->fecha_final_delegaciona }}</td>
                         <td>
                             {{ $btnDetails }}
                             <a href="{{route('delegacion.show', $delegacion)}}" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Mostrar">

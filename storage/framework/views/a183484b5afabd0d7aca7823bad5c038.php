@@ -27,7 +27,9 @@
                     'NO',
                     ['label' => 'DELEGACIÓN', 'width' => 5],
                     'NIVEL',
-                    ['label' => 'SEDE', 'width' => 40],
+                    ['label' => 'SEDE', 'width' => 10],
+                    'SECRETARÍA GENERAL / REPRESENTANTE DE C.T. ',
+                    'TELEFONO ',
                     ['label' => 'ACCIONES', 'no-export' => true, 'width' => 5],
                 ];
 
@@ -43,13 +45,15 @@
 
                 $config = [
                     
-                    'order' => [[1, 'asc']],
+                    // 'order' => [[1, 'asc']],
                     'columns' => [
                         ['orderable' => false], 
                         ['orderable' => false], 
                         ['orderable' => false], 
                         ['orderable' => false], 
-                        ['orderable' => false]
+                        ['orderable' => false],
+                        ['orderable' => false],
+                        ['orderable' => false],
                     ],
                     'lengthMenu' => [50,100,500],
                     // 'paging' => false,
@@ -73,24 +77,48 @@
                 <?php
                     $num_secuencial = 1;
                 ?>
-                
-
-
-
-
                 <?php $__currentLoopData = $region->delegaciones; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $delegacion): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <h2>Delegación: <?php echo e($delegacion->nomenclatura->nomenclatura); ?><?php echo e($delegacion->num_delegaciona); ?> </h2>
-                <ul>
-                    <?php $__currentLoopData = $delegacion->maestros; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $maestro): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <li>ID Secretaria: <?php echo e($maestro->id_secretaria); ?></li>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                </ul>
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-
-
-
-
-
+                    <tr>
+                        <td> <?php echo e($num_secuencial++); ?> </td>
+                        <td> <?php echo e($delegacion->nomenclatura->nomenclatura); ?><?php echo e($delegacion->num_delegaciona); ?> </td>
+                        <td> <?php echo e($delegacion->nivel_delegaciona); ?> </td>
+                        <td> 
+                            <?php echo e($delegacion->sede_delegaciona); ?> 
+                        </td>
+                        <?php $__currentLoopData = $delegacion->maestros; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $maestro): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <td><?php echo e($maestro->titulo); ?> <?php echo e($maestro->nombre); ?> <?php echo e($maestro->apaterno); ?> <?php echo e($maestro->amaterno); ?></td>
+                            <td>
+                                <a  href="https://api.whatsapp.com/send?phone=<?php echo e($maestro->telefono); ?>" target="_blank"><?php echo e($maestro->telefono); ?></a>
+                            </td>
+                            <?php break; ?>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <td>
+                            <form action=" <?php echo e(route('delegacion.show',$delegacion)); ?> " method="get">
+                                <?php echo csrf_field(); ?>
+                                <?php if (isset($component)) { $__componentOriginal84b78d66d5203b43b9d8c22236838526 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal84b78d66d5203b43b9d8c22236838526 = $attributes; } ?>
+<?php $component = JeroenNoten\LaravelAdminLte\View\Components\Form\Button::resolve(['type' => 'submit','label' => ' VER','theme' => 'success','icon' => 'fas fa-eye'] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
+<?php $component->withName('adminlte-button'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(JeroenNoten\LaravelAdminLte\View\Components\Form\Button::class))->getConstructor()): ?>
+<?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['class' => 'btn-sm']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal84b78d66d5203b43b9d8c22236838526)): ?>
+<?php $attributes = $__attributesOriginal84b78d66d5203b43b9d8c22236838526; ?>
+<?php unset($__attributesOriginal84b78d66d5203b43b9d8c22236838526); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal84b78d66d5203b43b9d8c22236838526)): ?>
+<?php $component = $__componentOriginal84b78d66d5203b43b9d8c22236838526; ?>
+<?php unset($__componentOriginal84b78d66d5203b43b9d8c22236838526); ?>
+<?php endif; ?>
+                            </form>                           
+                        </td>
+                    </tr>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
              <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal1f0f987500f76b1f57bfad21f77af286)): ?>
@@ -101,10 +129,6 @@
 <?php $component = $__componentOriginal1f0f987500f76b1f57bfad21f77af286; ?>
 <?php unset($__componentOriginal1f0f987500f76b1f57bfad21f77af286); ?>
 <?php endif; ?>
-
-
-
-            
         </div>
     </div>
 <?php $__env->stopSection(); ?>

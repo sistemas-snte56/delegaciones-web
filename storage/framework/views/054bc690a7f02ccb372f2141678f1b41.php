@@ -26,6 +26,8 @@
                     'DELEGACION', 
                     'NIVEL', 
                     'SEDE', 
+                    'INICIO', 
+                    'FINAL', 
                     ['label' => 'ACCIONES', 'no-export' => true, 'width' => 15]
                 ];
 
@@ -43,6 +45,8 @@
                         ['orderable' => false,'visible' => true, 'type' => 'num'],
                         ['orderable' => false,'visible' => true], 
                         ['orderable' => true,'visible' => true, 'type' => 'text'], 
+                        ['orderable' => false,'visible' => true], 
+                        ['orderable' => false,'visible' => true], 
                         ['orderable' => false,'visible' => true], 
                         ['orderable' => false,'visible' => true], 
                         ['orderable' => false,'visible' => true], 
@@ -88,6 +92,8 @@
                         <td><?php echo e($delegacion->nomenclatura->nomenclatura); ?><?php echo e($delegacion->num_delegaciona); ?>  </td>
                         <td><?php echo e($delegacion->nivel_delegaciona); ?></td>
                         <td><?php echo e($delegacion->sede_delegaciona); ?></td>
+                        <td><?php echo e($delegacion->fecha_inicio_delegaciona); ?></td>
+                        <td><?php echo e($delegacion->fecha_final_delegaciona); ?></td>
                         <td>
                             <?php echo e($btnDetails); ?>
 

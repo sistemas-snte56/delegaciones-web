@@ -4,6 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Delegacion;
 use App\Models\Region;
+
+
+use App\Models\Nomenclatura;
+use App\Models\Maestro;
+use App\Models\Secretaria;
+
+
+
+
+
+
+
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -57,63 +69,13 @@ class RegionController extends Controller
     public function show(Region $region, $id)
     {
 
+        $region = Region::findOrFail($id);
 
-        // $delegacion = Delegacion::with(['maestros' => function ($query) {
-        //     $query->orderBy('id', 'desc');
-        // }])->find($id);
+        $delegacion = Delegacion::with(['maestros' => function ($query) {
+            $query->orderBy('id', 'desc');
+        }])->find($id);
 
-        // // dd($delegacion);
-        // return view('config.delegaciones.show', compact('delegacion'));
-
-
-        // $region = Region::with([
-        //     'delegaciones' => function ($query)
-        //     {
-        //         $query->orderBy('id','asc');
-        //     }
-        // ])->find($id);
-
-/*
-
-        // Obtener la región específica junto con sus delegaciones
-        $region = Region::with('delegaciones')->findOrFail($id);
-
-        return view('config.regiones.show', compact('region'));
-
-*/
-
-
-
-
-
-$region = Region::with(['delegaciones' => function ($query) {
-    $query->with('maestros:id_secretaria,id_delegacion');
-}])->findOrFail($id);
-
-
-return view('config.regiones.show', compact('region'));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // return view('config.regiones.show','region');
+        return view('config.regiones.show', compact('region','delegacion'));
     }
 
     /**

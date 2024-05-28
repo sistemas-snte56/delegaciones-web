@@ -26,7 +26,9 @@
                     'NO',
                     ['label' => 'DELEGACIÓN', 'width' => 5],
                     'NIVEL',
-                    ['label' => 'SEDE', 'width' => 40],
+                    ['label' => 'SEDE', 'width' => 10],
+                    'SECRETARÍA GENERAL / REPRESENTANTE DE C.T. ',
+                    'TELEFONO ',
                     ['label' => 'ACCIONES', 'no-export' => true, 'width' => 5],
                 ];
 
@@ -42,13 +44,15 @@
 
                 $config = [
                     
-                    'order' => [[1, 'asc']],
+                    // 'order' => [[1, 'asc']],
                     'columns' => [
                         ['orderable' => false], 
                         ['orderable' => false], 
                         ['orderable' => false], 
                         ['orderable' => false], 
-                        ['orderable' => false]
+                        ['orderable' => false],
+                        ['orderable' => false],
+                        ['orderable' => false],
                     ],
                     'lengthMenu' => [50,100,500],
                     // 'paging' => false,
@@ -63,19 +67,21 @@
                 @php
                     $num_secuencial = 1;
                 @endphp
-                {{-- @foreach ($region->delegaciones as $delegacion)
+                @foreach ($region->delegaciones as $delegacion)
                     <tr>
-                        <td> {{$num_secuencial++}} </td>
+                        <td> {{ $num_secuencial++ }} </td>
                         <td> {{ $delegacion->nomenclatura->nomenclatura}}{{$delegacion->num_delegaciona}} </td>
                         <td> {{ $delegacion->nivel_delegaciona }} </td>
                         <td> 
                             {{$delegacion->sede_delegaciona}} 
-                            @foreach($delegacion->maestros as $maestro)
-                                <li>{{ $maestro->nombre }}</li>
-                            @endforeach
-                        
-                        
                         </td>
+                        @foreach ($delegacion->maestros as $maestro)
+                            <td>{{ $maestro->titulo}} {{ $maestro->nombre }} {{ $maestro->apaterno }} {{ $maestro->amaterno }}</td>
+                            <td>
+                                <a  href="https://api.whatsapp.com/send?phone={{ $maestro->telefono }}" target="_blank">{{ $maestro->telefono }}</a>
+                            </td>
+                            @break
+                        @endforeach
                         <td>
                             <form action=" {{route('delegacion.show',$delegacion)}} " method="get">
                                 @csrf
@@ -83,29 +89,8 @@
                             </form>                           
                         </td>
                     </tr>
-                @endforeach --}}
-
-
-
-
-                @foreach($region->delegaciones as $delegacion)
-                <h2>Delegación: {{ $delegacion->nomenclatura->nomenclatura}}{{$delegacion->num_delegaciona}} </h2>
-                <ul>
-                    @foreach($delegacion->maestros as $maestro)
-                        <li>ID Secretaria: {{ $maestro->id_secretaria }}</li>
-                    @endforeach
-                </ul>
-            @endforeach
-
-
-
-
-
+                @endforeach 
             </x-adminlte-datatable>
-
-
-
-            
         </div>
     </div>
 @stop
