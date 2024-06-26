@@ -68,6 +68,31 @@
 <?php $component = $__componentOriginale5d826ae10df3aa87f8449f474c11664; ?>
 <?php unset($__componentOriginale5d826ae10df3aa87f8449f474c11664); ?>
 <?php endif; ?>    
+                <?php if (isset($component)) { $__componentOriginale5d826ae10df3aa87f8449f474c11664 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginale5d826ae10df3aa87f8449f474c11664 = $attributes; } ?>
+<?php $component = JeroenNoten\LaravelAdminLte\View\Components\Form\Input::resolve(['name' => 'coordinador','id' => 'coordinador','label' => 'Coordinador','labelClass' => 'text-orange'] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
+<?php $component->withName('adminlte-input'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(JeroenNoten\LaravelAdminLte\View\Components\Form\Input::class))->getConstructor()): ?>
+<?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['type' => 'text','placeholder' => 'Nombre del Coordinador Regional','value' => ''.e(old('coordinador')).'']); ?>
+                     <?php $__env->slot('prependSlot', null, []); ?> 
+                        <div class="input-group-text">
+                            <i class="fas fa-user text-orange"></i>
+                        </div>
+                     <?php $__env->endSlot(); ?>
+                 <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginale5d826ae10df3aa87f8449f474c11664)): ?>
+<?php $attributes = $__attributesOriginale5d826ae10df3aa87f8449f474c11664; ?>
+<?php unset($__attributesOriginale5d826ae10df3aa87f8449f474c11664); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginale5d826ae10df3aa87f8449f474c11664)): ?>
+<?php $component = $__componentOriginale5d826ae10df3aa87f8449f474c11664; ?>
+<?php unset($__componentOriginale5d826ae10df3aa87f8449f474c11664); ?>
+<?php endif; ?>    
             </div>
                 
             <div class="card-footer text-muted">

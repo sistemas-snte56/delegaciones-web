@@ -13,10 +13,12 @@
 
 <?php $__env->startSection('content'); ?>
     <div class="card">
+        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('region.create')): ?>
         <div class="card-header">
             Lista de <strong>Regiones</strong>
-            <a href="<?php echo e(route('region.create')); ?>" class="btn btn-primary float-right"><i class="fa fa-sm fa-fw fa-pen"></i> Nuevo</a>
+            <a href="<?php echo e(route('region.create')); ?>" class="btn btn-primary float-right"><i class="fa fa-sm fa-fw fa-pen"></i>&emsp;Nueva Región</a>
         </div>
+        <?php endif; ?>
 
         <div class="card-body">
             <?php
@@ -76,21 +78,25 @@
                         <td><?php echo e($region->coordinador); ?></td>
                         <td><?php echo e($region->delegaciones_count); ?></td>
                         <td>
+                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('region.show')): ?>
+                                <a href="<?php echo e(route('region.show',$region)); ?>" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Mostrar">
+                                    <i class="fa fa-lg fa-fw fa-eye"></i>
+                                </a>                            
+                            <?php endif; ?>
 
+                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('region.edit')): ?>
+                                <a href="<?php echo e(route('region.edit',$region)); ?>" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Editar">
+                                    <i class="fa fa-lg fa-fw fa-pen"></i>
+                                </a>
+                            <?php endif; ?>
+                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('region.destroy')): ?>
+                                <form action=" <?php echo e(route('region.destroy', $region)); ?> " method="post" class="formEliminar" style="display: inline">
+                                    <?php echo csrf_field(); ?>
+                                    <?php echo method_field('DELETE'); ?>
+                                    <?php echo $btnDelete; ?>
 
-                            <a href="<?php echo e(route('region.show',$region)); ?>" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Mostrar">
-                                <i class="fa fa-lg fa-fw fa-eye"></i>
-                            </a>                            
-                            <a href="<?php echo e(route('region.edit',$region)); ?>" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Editar">
-                                <i class="fa fa-lg fa-fw fa-pen"></i>
-                            </a>
-                            <form action=" <?php echo e(route('region.destroy', $region)); ?> " method="post" class="formEliminar" style="display: inline">
-                                <?php echo csrf_field(); ?>
-                                <?php echo method_field('DELETE'); ?>
-                                <?php echo $btnDelete; ?>
-
-                            </form>
-                            
+                                </form>
+                            <?php endif; ?>
                         </td>
                     </tr>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

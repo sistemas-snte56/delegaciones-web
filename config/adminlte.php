@@ -211,7 +211,10 @@ return [
     | https://github.com/jeroennoten/Laravel-AdminLTE/wiki/Layout-and-Styling-Configuration
     
 
-    ORIGINALES 
+    |
+    */
+    
+    // ORIGINALES 
     'sidebar_mini' => 'lg',
     'sidebar_collapse' => false,
     'sidebar_collapse_auto_size' => false,
@@ -221,9 +224,8 @@ return [
     'sidebar_scrollbar_auto_hide' => 'l',
     'sidebar_nav_accordion' => true,
     'sidebar_nav_animation_speed' => 300,
-    |
-    */
-    
+
+    /*
     'sidebar_mini' => false,
     'sidebar_collapse' => true,
     'sidebar_collapse_auto_size' => false,
@@ -233,6 +235,9 @@ return [
     'sidebar_scrollbar_auto_hide' => 'l',
     'sidebar_nav_accordion' => true,
     'sidebar_nav_animation_speed' => 300,
+    */
+
+
 
     /*
     |--------------------------------------------------------------------------
@@ -381,30 +386,50 @@ return [
         // ],
 
         [
+            'header' => 'Inicio',
+            'classes' => 'text-orange text-bold text-left text-uppercase',
+        ],
+
+        [
             'text' => 'Inicio',
             'url' => '/dashboard',
             'icon' => 'fas fa-fw fa-home',
         ],
 
+
+
+        /*
+            [
+                'text'        => 'pages',
+                'url'         => 'admin/pages',
+                'icon'        => 'far fa-fw fa-file',
+                'label'       => 4,
+                'label_color' => 'success',
+            ],
+        */
+
+
+
+        // APARTADO DE CONFIGURACIONES
+
         [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
+            'header' => 'account_settings',
+            'classes' => 'text-orange text-bold text-left',
+            'can' => 'ConfigurationManager',
         ],
-        [
-            'text'        => 'pages',
-            'url'         => 'admin/pages',
-            'icon'        => 'far fa-fw fa-file',
-            'label'       => 4,
-            'label_color' => 'success',
-        ],
-        ['header' => 'account_settings'],
         [
             'text' => 'profile',
             'url'  => 'profile',
             'icon' => 'fas fa-fw fa-user',
+            'can' => 'ConfigurationManager',
         ],
-        ['header' => 'CONFIGURACIÓN'],
+
+
+        [
+            'header' => 'CONFIGURACIÓN',
+            'classes' => 'text-orange text-bold text-left',
+        ],
+        
         [
             'text' => 'Regiones',
             'route'  => 'region.index',
@@ -419,7 +444,42 @@ return [
             'text' => 'Maestros',
             'route'  => 'maestro.index',
             'icon' => 'fas fa-fw fa-user',
+            'can' => ['maestro.index', 'maestro.show'],
         ],
+
+
+
+        // APARTADO DE PERMISOS
+        [
+            'header' => 'PERMISOS',
+            'classes' => 'text-orange text-bold text-center',
+            'can' => 'ConfigurationManager',
+        ],
+
+        [
+            'text' => 'Roles',
+            'route'  => 'roles.index',
+            'icon' => 'fas fa-fw fa-user',
+            'can' => 'ConfigurationManager',
+        ],
+        [
+            'text' => 'Permisos',
+            'route'  => 'permisos.index',
+            'icon' => 'fas fa-fw fa-user',
+            'can' => 'ConfigurationManager',
+        ],
+        [
+            'text' => 'Usuarios',
+            'route'  => 'asignar.index',
+            'icon' => 'fas fa-fw fa-user',
+            'can' => 'ConfigurationManager',
+        ],
+
+
+
+
+
+
 
     ],
 

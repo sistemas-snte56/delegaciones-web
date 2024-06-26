@@ -18,17 +18,27 @@
             </h5>
             
             <div class="dt-buttons btn-group flex-wrap float-right">  
-                <a href="{{route('delegacion.edit', $delegacion)}}" class="btn buttons-html5 btn-default text-primary" >
-                    <i class="fas fa-fw fa-pen "></i> <b>EDITAR</b>
-                </a>
-                <a href="{{route('delegacion.date', $delegacion)}}" class="btn buttons-html5 btn-default text-success" >
-                    <i class="fas fa-fw fa-lg fa-file"></i>
-                    <b>DIRECTORIO</b>
-                </a>
-                <button type="button" class="btn buttons-html5 btn-default" onclick="abrirPagina()">
-                    <i class="fas fa-fw fa-lg fa-print"></i>
-                    <b>MEMBRETADO</b>
-                </button>
+                @can('delegacion.edit')
+                    <a href="{{route('delegacion.edit', $delegacion)}}" class="btn buttons-html5 btn-default text-primary" >
+                        <i class="fas fa-fw fa-pen "></i> <b>EDITAR</b>
+                    </a>
+                @endcan
+
+                @can('delegacion.date', $delegacion)
+                    <a href="{{route('delegacion.date', $delegacion)}}" class="btn buttons-html5 btn-default text-success" >
+                        <i class="fas fa-fw fa-lg fa-file"></i>
+                        <b>DIRECTORIO</b>
+                    </a>
+                @endcan
+
+                @can('delegacion.print')
+                    <button type="button" class="btn buttons-html5 btn-default" onclick="abrirPagina()">
+                        <i class="fas fa-fw fa-lg fa-print"></i>
+                        <b>MEMBRETADO</b>
+                    </button>
+                @endcan
+
+
             </div>
         </div>
 
@@ -72,10 +82,10 @@
            {{-- Setup data for datatables --}}
             @php
                 
-                $heads = ['ID','CARGO', 'TITULAR', 'GENERO', 'EMAIL', 'TELÉFONO', ['label' => 'ACCIONES', 'no-export' => true, 'width' => 8]];
+                $heads = ['ID','CARGO', 'TITULAR', 'GENERO', 'EMAIL', 'TELÉFONO', ['label' => 'ACCIONES', 'no-export' => true, 'width' => 12]];
 
                 $btnDelete = '<button type="submit" class="btn btn-xs btn-default text-danger mx-1 shadow" title="Eliminar">
-                                <i class="fa fa-lg fa-fw fa-trash"></i> BORRAR
+                                <i class="fa fa-lg fa-fw fa-trash"></i>
                             </button>';
                 $btnDetails = '';
 
@@ -125,10 +135,10 @@
                             <td>{{ $maestro->email}} </td>
                             <td>{{ $maestro->telefono}} </td>
                             <td>
-                                <a href="{{route('maestro.show',$maestro)}}" class="btn btn-sm btn-default text-success mx-1 shadow" title="MOSTRAR LOS DATOS DE {{ $maestro->nombre }} {{ $maestro->apaterno }}">
+                                <a href="{{route('maestro.show',$maestro)}}" class="btn btn-xs btn-default text-primary mx-1 shadow" title="MOSTRAR LOS DATOS DE {{ $maestro->nombre }} {{ $maestro->apaterno }}">
                                     <i class="fa fa-lg fa-fw fa-eye"></i>  
                                 </a>                            
-                                <a href="{{route('maestro.edit',$maestro)}}" class="btn btn-sm btn-default text-success mx-1 shadow" title="EDITAR A {{ $maestro->nombre }} {{ $maestro->apaterno }}">
+                                <a href="{{route('maestro.edit',$maestro)}}" class="btn btn-xs btn-default text-teal mx-1 shadow" title="EDITAR A {{ $maestro->nombre }} {{ $maestro->apaterno }}">
                                     <i class="fa fa-lg fa-fw fa-pen"></i>  
                                 </a>     
 
@@ -137,18 +147,6 @@
                                     @method('DELETE')
                                     {!! $btnDelete !!}
                                 </form>
-
-
-
-
-
-
-
-
-
-
-
-
                             </td>
                         </tr>
                         

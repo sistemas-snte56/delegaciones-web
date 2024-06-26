@@ -18,17 +18,27 @@
             </h5>
             
             <div class="dt-buttons btn-group flex-wrap float-right">  
-                <a href="<?php echo e(route('delegacion.edit', $delegacion)); ?>" class="btn buttons-html5 btn-default text-primary" >
-                    <i class="fas fa-fw fa-pen "></i> <b>EDITAR</b>
-                </a>
-                <a href="<?php echo e(route('delegacion.date', $delegacion)); ?>" class="btn buttons-html5 btn-default text-success" >
-                    <i class="fas fa-fw fa-lg fa-file"></i>
-                    <b>DIRECTORIO</b>
-                </a>
-                <button type="button" class="btn buttons-html5 btn-default" onclick="abrirPagina()">
-                    <i class="fas fa-fw fa-lg fa-print"></i>
-                    <b>MEMBRETADO</b>
-                </button>
+                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delegacion.edit')): ?>
+                    <a href="<?php echo e(route('delegacion.edit', $delegacion)); ?>" class="btn buttons-html5 btn-default text-primary" >
+                        <i class="fas fa-fw fa-pen "></i> <b>EDITAR</b>
+                    </a>
+                <?php endif; ?>
+
+                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delegacion.date', $delegacion)): ?>
+                    <a href="<?php echo e(route('delegacion.date', $delegacion)); ?>" class="btn buttons-html5 btn-default text-success" >
+                        <i class="fas fa-fw fa-lg fa-file"></i>
+                        <b>DIRECTORIO</b>
+                    </a>
+                <?php endif; ?>
+
+                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delegacion.print')): ?>
+                    <button type="button" class="btn buttons-html5 btn-default" onclick="abrirPagina()">
+                        <i class="fas fa-fw fa-lg fa-print"></i>
+                        <b>MEMBRETADO</b>
+                    </button>
+                <?php endif; ?>
+
+
             </div>
         </div>
 
@@ -255,10 +265,10 @@
            
             <?php
                 
-                $heads = ['ID','CARGO', 'TITULAR', 'GENERO', 'EMAIL', 'TELÉFONO', ['label' => 'ACCIONES', 'no-export' => true, 'width' => 8]];
+                $heads = ['ID','CARGO', 'TITULAR', 'GENERO', 'EMAIL', 'TELÉFONO', ['label' => 'ACCIONES', 'no-export' => true, 'width' => 12]];
 
                 $btnDelete = '<button type="submit" class="btn btn-xs btn-default text-danger mx-1 shadow" title="Eliminar">
-                                <i class="fa fa-lg fa-fw fa-trash"></i> BORRAR
+                                <i class="fa fa-lg fa-fw fa-trash"></i>
                             </button>';
                 $btnDetails = '';
 
@@ -317,10 +327,10 @@
                             <td><?php echo e($maestro->email); ?> </td>
                             <td><?php echo e($maestro->telefono); ?> </td>
                             <td>
-                                <a href="<?php echo e(route('maestro.show',$maestro)); ?>" class="btn btn-sm btn-default text-success mx-1 shadow" title="MOSTRAR LOS DATOS DE <?php echo e($maestro->nombre); ?> <?php echo e($maestro->apaterno); ?>">
+                                <a href="<?php echo e(route('maestro.show',$maestro)); ?>" class="btn btn-xs btn-default text-primary mx-1 shadow" title="MOSTRAR LOS DATOS DE <?php echo e($maestro->nombre); ?> <?php echo e($maestro->apaterno); ?>">
                                     <i class="fa fa-lg fa-fw fa-eye"></i>  
                                 </a>                            
-                                <a href="<?php echo e(route('maestro.edit',$maestro)); ?>" class="btn btn-sm btn-default text-success mx-1 shadow" title="EDITAR A <?php echo e($maestro->nombre); ?> <?php echo e($maestro->apaterno); ?>">
+                                <a href="<?php echo e(route('maestro.edit',$maestro)); ?>" class="btn btn-xs btn-default text-teal mx-1 shadow" title="EDITAR A <?php echo e($maestro->nombre); ?> <?php echo e($maestro->apaterno); ?>">
                                     <i class="fa fa-lg fa-fw fa-pen"></i>  
                                 </a>     
 
@@ -330,18 +340,6 @@
                                     <?php echo $btnDelete; ?>
 
                                 </form>
-
-
-
-
-
-
-
-
-
-
-
-
                             </td>
                         </tr>
                         

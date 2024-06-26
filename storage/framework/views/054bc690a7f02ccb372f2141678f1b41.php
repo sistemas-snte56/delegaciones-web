@@ -8,12 +8,12 @@
 
 <?php $__env->startSection('content'); ?>
     <div class="card">
+        <?php if (\Illuminate\Support\Facades\Blade::check('role', 'Administrador')): ?>
         <div class="card-header">
             Lista de <strong>Delegaciones</strong>
             <a href="<?php echo e(route('delegacion.create')); ?>" class="btn btn-primary float-right"><i class="fa fa-sm fa-fw fa-pen"></i> Nuevo</a>
-        
         </div>
-
+        <?php endif; ?>
         <div class="card-body">
             
             <?php
@@ -51,7 +51,7 @@
                         ['orderable' => false,'visible' => true], 
                         ['orderable' => false,'visible' => true], 
                     ],
-                    'order' => [4 , 'asc'],
+                    'order' => [3 , 'asc'],
 
                     'language' => [
                         'url' => '//cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json',
@@ -95,26 +95,32 @@
                         <td><?php echo e($delegacion->fecha_inicio_delegaciona); ?></td>
                         <td><?php echo e($delegacion->fecha_final_delegaciona); ?></td>
                         <td>
-                            <?php echo e($btnDetails); ?>
+                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delegacion.show')): ?>
+                                <a href="<?php echo e(route('delegacion.show', $delegacion)); ?>" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Mostrar">
+                                    <i class="fa fa-lg fa-fw fa-eye"></i>
+                                </a>                            
+                            <?php endif; ?>
 
-                            <a href="<?php echo e(route('delegacion.show', $delegacion)); ?>" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Mostrar">
-                                <i class="fa fa-lg fa-fw fa-eye"></i>
-                            </a>                            
+                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delegacion.date')): ?>
+                                <a href="<?php echo e(route('delegacion.date', $delegacion)); ?>" target="_blank" class="btn btn-xs buttons-print btn-default  mx-1 " title="Imprimir Directorio">
+                                    <i class="fas fa-fw fa-lg fa-edit"></i>
+                                </a>                            
+                            <?php endif; ?>
 
-                            <form action="<?php echo e(route('delegacion.destroy',$delegacion)); ?>" method="post" class="formEliminar" style="display: inline">
-                                <?php echo csrf_field(); ?>
-                                <?php echo method_field('DELETE'); ?>
-                                <?php echo $btnDelete; ?>
+                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delegacion.print')): ?>
+                                <a href="<?php echo e(route('delegacion.print', $delegacion)); ?>" target="_blank" class="btn btn-xs buttons-print btn-default  mx-1 " title="Imprimir hoja">
+                                    <i class="fas fa-fw fa-lg fa-print"></i>
+                                </a>                            
+                            <?php endif; ?>
 
-                            </form>
+                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delegacion.destroy')): ?>
+                                <form action="<?php echo e(route('delegacion.destroy',$delegacion)); ?>" method="post" class="formEliminar" style="display: inline">
+                                    <?php echo csrf_field(); ?>
+                                    <?php echo method_field('DELETE'); ?>
+                                    <?php echo $btnDelete; ?>
 
-                            <a href="<?php echo e(route('delegacion.print', $delegacion)); ?>" target="_blank" class="btn btn-xs buttons-print btn-default  mx-1 " title="Imprimir hoja">
-                                <i class="fas fa-fw fa-lg fa-print"></i>
-                            </a>                            
-
-                            <a href="<?php echo e(route('delegacion.date', $delegacion)); ?>" target="_blank" class="btn btn-xs buttons-print btn-default  mx-1 " title="Imprimir hoja">
-                                <i class="fas fa-fw fa-lg fa-edit"></i>
-                            </a>                            
+                                </form>
+                            <?php endif; ?>
                         </td>
                     </tr>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

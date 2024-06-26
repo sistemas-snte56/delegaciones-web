@@ -13,10 +13,12 @@
 
 @section('content')
     <div class="card">
+        @can('region.create')
         <div class="card-header">
             Lista de <strong>Regiones</strong>
-            <a href="{{route('region.create')}}" class="btn btn-primary float-right"><i class="fa fa-sm fa-fw fa-pen"></i> Nuevo</a>
+            <a href="{{route('region.create')}}" class="btn btn-primary float-right"><i class="fa fa-sm fa-fw fa-pen"></i>&emsp;Nueva Región</a>
         </div>
+        @endcan
 
         <div class="card-body">
             @php
@@ -68,20 +70,24 @@
                         <td>{{ $region->coordinador }}</td>
                         <td>{{ $region->delegaciones_count }}</td>
                         <td>
+                            @can('region.show')
+                                <a href="{{route('region.show',$region)}}" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Mostrar">
+                                    <i class="fa fa-lg fa-fw fa-eye"></i>
+                                </a>                            
+                            @endcan
 
-
-                            <a href="{{route('region.show',$region)}}" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Mostrar">
-                                <i class="fa fa-lg fa-fw fa-eye"></i>
-                            </a>                            
-                            <a href="{{route('region.edit',$region)}}" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Editar">
-                                <i class="fa fa-lg fa-fw fa-pen"></i>
-                            </a>
-                            <form action=" {{ route('region.destroy', $region) }} " method="post" class="formEliminar" style="display: inline">
-                                @csrf
-                                @method('DELETE')
-                                {!! $btnDelete !!}
-                            </form>
-                            
+                            @can('region.edit')
+                                <a href="{{route('region.edit',$region)}}" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Editar">
+                                    <i class="fa fa-lg fa-fw fa-pen"></i>
+                                </a>
+                            @endcan
+                            @can('region.destroy')
+                                <form action=" {{ route('region.destroy', $region) }} " method="post" class="formEliminar" style="display: inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    {!! $btnDelete !!}
+                                </form>
+                            @endcan
                         </td>
                     </tr>
                 @endforeach

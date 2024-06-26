@@ -32,6 +32,13 @@
                         </div>
                     </x-slot>
                 </x-adminlte-input>    
+                <x-adminlte-input type="text" name="coordinador" id="coordinador" label="Coordinador" placeholder="Nombre del Coordinador Regional" label-class="text-orange" value="{{old('coordinador')}}" >
+                    <x-slot name="prependSlot">
+                        <div class="input-group-text">
+                            <i class="fas fa-user text-orange"></i>
+                        </div>
+                    </x-slot>
+                </x-adminlte-input>    
             </div>
                 
             <div class="card-footer text-muted">

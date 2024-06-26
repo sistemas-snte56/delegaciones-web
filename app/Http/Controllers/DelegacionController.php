@@ -17,6 +17,23 @@ use Illuminate\Database\QueryException;
 
 class DelegacionController extends Controller
 {
+
+
+    /**
+     * Funcion contructora
+     */
+    public function __construct()
+    {
+        $this->middleware('can:delegacion.index')->only('index');
+        $this->middleware('can:delegacion.create')->only('create');
+        $this->middleware('can:delegacion.show')->only('show');
+        $this->middleware('can:delegacion.edit')->only('edit','update');
+        $this->middleware('can:delegacion.print')->only('printHoja');
+        $this->middleware('can:delegacion.date')->only('printHojaDatos');
+        $this->middleware('can:delegacion.destroy')->only('destroy');
+    }
+
+
     /**
      * Display a listing of the resource.
      */

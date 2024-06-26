@@ -11,6 +11,19 @@ use Illuminate\Support\Facades\Validator;
 
 class MaestroController extends Controller
 {
+
+    /**
+     * Funcion contructora
+     */
+    public function __construct()
+    {
+        $this->middleware('can:maestro.index')->only('index');
+        $this->middleware('can:maestro.edit')->only('edit','update');
+        $this->middleware('can:maestro.create')->only('create','store');
+        $this->middleware('can:maestro.show')->only('show');
+        $this->middleware('can:maestro.destroy')->only('destroy');
+    }
+
     /**
      * Display a listing of the resource.
      */

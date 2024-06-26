@@ -8,12 +8,12 @@
 
 @section('content')
     <div class="card">
+        @role('Administrador')
         <div class="card-header">
             Lista de <strong>Delegaciones</strong>
             <a href="{{route('delegacion.create')}}" class="btn btn-primary float-right"><i class="fa fa-sm fa-fw fa-pen"></i> Nuevo</a>
-        
         </div>
-
+        @endrole
         <div class="card-body">
             {{-- Setup data for datatables --}}
             @php
@@ -51,7 +51,7 @@
                         ['orderable' => false,'visible' => true], 
                         ['orderable' => false,'visible' => true], 
                     ],
-                    'order' => [4 , 'asc'],
+                    'order' => [3 , 'asc'],
 
                     'language' => [
                         'url' => '//cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json',
@@ -86,24 +86,31 @@
                         <td>{{ $delegacion->fecha_inicio_delegaciona }}</td>
                         <td>{{ $delegacion->fecha_final_delegaciona }}</td>
                         <td>
-                            {{ $btnDetails }}
-                            <a href="{{route('delegacion.show', $delegacion)}}" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Mostrar">
-                                <i class="fa fa-lg fa-fw fa-eye"></i>
-                            </a>                            
+                            @can('delegacion.show')
+                                <a href="{{route('delegacion.show', $delegacion)}}" class="btn btn-xs btn-default text-teal mx-1 shadow" title="Mostrar">
+                                    <i class="fa fa-lg fa-fw fa-eye"></i>
+                                </a>                            
+                            @endcan
 
-                            <form action="{{route('delegacion.destroy',$delegacion)}}" method="post" class="formEliminar" style="display: inline">
-                                @csrf
-                                @method('DELETE')
-                                {!! $btnDelete !!}
-                            </form>
+                            @can('delegacion.date')
+                                <a href="{{route('delegacion.date', $delegacion)}}" target="_blank" class="btn btn-xs buttons-print btn-default  mx-1 " title="Imprimir Directorio">
+                                    <i class="fas fa-fw fa-lg fa-edit"></i>
+                                </a>                            
+                            @endcan
 
-                            <a href="{{route('delegacion.print', $delegacion)}}" target="_blank" class="btn btn-xs buttons-print btn-default  mx-1 " title="Imprimir hoja">
-                                <i class="fas fa-fw fa-lg fa-print"></i>
-                            </a>                            
+                            @can('delegacion.print')
+                                <a href="{{route('delegacion.print', $delegacion)}}" target="_blank" class="btn btn-xs buttons-print btn-default  mx-1 " title="Imprimir hoja">
+                                    <i class="fas fa-fw fa-lg fa-print"></i>
+                                </a>                            
+                            @endcan
 
-                            <a href="{{route('delegacion.date', $delegacion)}}" target="_blank" class="btn btn-xs buttons-print btn-default  mx-1 " title="Imprimir hoja">
-                                <i class="fas fa-fw fa-lg fa-edit"></i>
-                            </a>                            
+                            @can('delegacion.destroy')
+                                <form action="{{route('delegacion.destroy',$delegacion)}}" method="post" class="formEliminar" style="display: inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    {!! $btnDelete !!}
+                                </form>
+                            @endcan
                         </td>
                     </tr>
                 @endforeach

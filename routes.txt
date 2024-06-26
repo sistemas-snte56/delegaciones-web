@@ -1,0 +1,65 @@
+
+  GET|HEAD        asignar .................................................... asignar.index › AsignarController@index
+  POST            asignar .................................................... asignar.store › AsignarController@store
+  GET|HEAD        asignar/create ........................................... asignar.create › AsignarController@create
+  GET|HEAD        asignar/{asignar} ............................................ asignar.show › AsignarController@show
+  PUT|PATCH       asignar/{asignar} ........................................ asignar.update › AsignarController@update
+  DELETE          asignar/{asignar} ...................................... asignar.destroy › AsignarController@destroy
+  GET|HEAD        asignar/{asignar}/edit ....................................... asignar.edit › AsignarController@edit
+
+
+  
+  GET|HEAD        delegacion-ct ......................................................... DelegacionCtController@index
+  GET|HEAD        delegaciones ......................................... delegacion.index › DelegacionController@index
+  POST            delegaciones ......................................... delegacion.store › DelegacionController@store
+  GET|HEAD        delegaciones/create ................................ delegacion.create › DelegacionController@create
+  GET|HEAD        delegaciones/get-nomenclatura/{TipoDelegacionId} ............. DelegacionController@getNomenclaturas
+  GET|HEAD        delegaciones/{delegacione} ............................. delegacion.show › DelegacionController@show
+  PUT|PATCH       delegaciones/{delegacione} ......................... delegacion.update › DelegacionController@update
+  DELETE          delegaciones/{delegacione} ....................... delegacion.destroy › DelegacionController@destroy
+  GET|HEAD        delegaciones/{delegacione}/edit ........................ delegacion.edit › DelegacionController@edit
+  GET|HEAD        delegaciones/{delegacione}/hoja .............. delegacion.date › DelegacionController@printHojaDatos
+  GET|HEAD        delegaciones/{delegacione}/print ................. delegacion.print › DelegacionController@printHoja
+
+
+
+
+  GET|HEAD        maestros ................................................... maestro.index › MaestroController@index
+  POST            maestros ................................................... maestro.store › MaestroController@store
+  GET|HEAD        maestros/create .......................................... maestro.create › MaestroController@create
+  GET|HEAD        maestros/{maestro} ........................................... maestro.show › MaestroController@show
+  PUT|PATCH       maestros/{maestro} ....................................... maestro.update › MaestroController@update
+  DELETE          maestros/{maestro} ..................................... maestro.destroy › MaestroController@destroy
+  GET|HEAD        maestros/{maestro}/edit ...................................... maestro.edit › MaestroController@edit
+
+
+  GET|HEAD        permisos .................................................. permisos.index › PermisoController@index
+  POST            permisos .................................................. permisos.store › PermisoController@store
+  GET|HEAD        permisos/create ......................................... permisos.create › PermisoController@create
+  GET|HEAD        permisos/{permiso} .......................................... permisos.show › PermisoController@show
+  PUT|PATCH       permisos/{permiso} ...................................... permisos.update › PermisoController@update
+  DELETE          permisos/{permiso} .................................... permisos.destroy › PermisoController@destroy
+  GET|HEAD        permisos/{permiso}/edit ..................................... permisos.edit › PermisoController@edit
+
+
+
+
+  GET|HEAD        regiones ..................................................... region.index › RegionController@index
+  POST            regiones ..................................................... region.store › RegionController@store
+  GET|HEAD        regiones/create ............................................ region.create › RegionController@create
+  GET|HEAD        regiones/{regione} ............................................. region.show › RegionController@show
+  PUT|PATCH       regiones/{regione} ......................................... region.update › RegionController@update
+  DELETE          regiones/{regione} ....................................... region.destroy › RegionController@destroy
+  GET|HEAD        regiones/{regione}/edit ........................................ region.edit › RegionController@edit
+
+
+
+  GET|HEAD        roles ........................................................... roles.index › RoleController@index
+  POST            roles ........................................................... roles.store › RoleController@store
+  GET|HEAD        roles/create .................................................. roles.create › RoleController@create
+  GET|HEAD        roles/{role} ...................................................... roles.show › RoleController@show
+  PUT|PATCH       roles/{role} .................................................. roles.update › RoleController@update
+  DELETE          roles/{role} ................................................ roles.destroy › RoleController@destroy
+  GET|HEAD        roles/{role}/edit ................................................. roles.edit › RoleController@edit
+
+

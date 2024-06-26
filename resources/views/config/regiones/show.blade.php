@@ -44,10 +44,10 @@
 
                 $config = [
                     
-                    // 'order' => [[1, 'asc']],
+                    'order' => [[1, 'asc']],
                     'columns' => [
                         ['orderable' => false], 
-                        ['orderable' => false], 
+                        ['orderable' => true], 
                         ['orderable' => false], 
                         ['orderable' => false], 
                         ['orderable' => false],

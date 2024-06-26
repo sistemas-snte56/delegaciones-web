@@ -23,6 +23,25 @@ use Illuminate\Support\Facades\Validator;
 
 class RegionController extends Controller
 {
+
+    /**
+     * Funcion contructora
+     */
+    public function __construct()
+    {
+        // $this->middleware('can: region.edit')->only('edit');
+        // $this->middleware('can: region.create')->only('create');
+        // $this->middleware('can: region.show')->only('show');
+        // $this->middleware('can: region.edit')->only('edit');
+        // $this->middleware('can: region.destroy')->only('destroy');
+        $this->middleware('can:region.index')->only('index');
+        $this->middleware('can:region.create')->only('create');
+        $this->middleware('can:region.show')->only('show');
+        $this->middleware('can:region.edit')->only('edit','update');
+    }
+
+
+
     /**
      * Display a listing of the resource.
      */
@@ -49,17 +68,27 @@ class RegionController extends Controller
      */
     public function store(Request $request)
     {
-        // Definiendo la regla de validación
+        // Definiendo la regla de validación, validando los datos del formulario
         $validation = $request->validate([
             'region' => 'required|string',
             'sede' => 'required|string',
+            'coordinador' => 'required|string',
         ]);
 
+        // Creamos una nueva instancia del modelo Región
         $region = new Region();
-        $region->region = strtoupper($request->input('region')) ;
-        $region->sede = strtoupper($request->input('sede'));
+
+        // Asignar el valor de los campo convertido a mayúsculas usando mb_strtoupper
+        // 'UTF-8' especifica la codificación de caracteres multibyte que estamos utilizando        
+        $region->region = mb_strtoupper($request->input('region'),'UTF-8') ;
+        $region->sede = mb_strtoupper($request->input('sede'),'UTF-8');
+        $region->coordinador = mb_strtoupper($request->input('coordinador'),'UTF-8');
+
+        // Guardar el nuevo registro en la base de datos
         $region->save();
 
+        // Redireccionar a la lista de regiones index después de guardar exitosamente
+        // con un mensaje de éxito usando ->with('success', 'Mensaje')        
         return redirect('/regiones')->with('success', 'Su registro se guardo con éxito.');
     }
 
@@ -99,11 +128,15 @@ class RegionController extends Controller
         $validation = $request->validate([
             'region' => 'required|string',
             'sede' => 'required|string',
+            'coordinador' => 'required|string',
         ]);
 
 
-        $region->region = strtoupper($request->input('region')) ;
-        $region->sede = strtoupper($request->input('sede'));
+        $region->region = mb_strtoupper($request->input('region'),'UTF-8') ;
+        $region->sede = mb_strtoupper($request->input('sede'),'UTF-8');
+        $region->coordinador = mb_strtoupper($request->input('coordinador'),'UTF-8');
+        
+        // Guardar el nuevo registro en la base de datos
         $region->save();
 
         return redirect('/regiones')->with('update', 'Su registro ha sido actualizdo con éxito.');
